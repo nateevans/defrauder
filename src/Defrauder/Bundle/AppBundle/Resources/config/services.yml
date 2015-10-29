@@ -4,3 +4,6 @@ services:
         arguments: [@service_container]
         tags:
             - { name: form.type, alias: defrauder_transaction }
+    app.defrauder.helper:
+        class: Defrauder\Bundle\AppBundle\Helper\DefrauderHelper
+        arguments: [@service_container]

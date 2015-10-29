@@ -4,13 +4,11 @@ namespace Defrauder\Bundle\AppBundle\Form\Type;
 
 use ReCaptchaSecureToken\ReCaptchaToken;
 use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\EventDispatcher\Tests\ContainerAwareEventDispatcherTest;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-
-use Symfony\Component\DependencyInjection\ContainerAware;
 
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
@@ -19,7 +17,7 @@ class TransactionType extends AbstractType
     /** @var Container */
     protected $container;
 
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }

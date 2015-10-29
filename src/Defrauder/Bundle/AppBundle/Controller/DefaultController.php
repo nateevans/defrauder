@@ -39,15 +39,21 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // todo: run detailed transaction validation
+            $defrauderHelper = $this->get('app.defrauder.helper');
 
-            /** @var $em \Doctrine\Common\Persistence\ObjectManager */
-            $em = $this->getDoctrine()->getManager();
+            if ($defrauderHelper->transactionIsValid($trasaction)) {
+                // seems legit...
+                /** @var $em \Doctrine\Common\Persistence\ObjectManager */
+                $em = $this->getDoctrine()->getManager();
 
-            $em->persist($trasaction);
-            $em->flush();
+                $em->persist($trasaction);
+                $em->flush();
 
-            return $this->redirectToRoute('success', array('uuid' => $trasaction->getUuid()));
+                return $this->redirectToRoute('success', array('uuid' => $trasaction->getUuid()));
+            } else {
+                // sketchy transaction!
+                return $this->redirectToRoute('fail');
+            }
         }
 
         return $this->render(
@@ -78,6 +84,16 @@ class DefaultController extends Controller
             'transaction' => $transaction
           )
         );
+    }
+
+    /**
+     * @Route("/fail", name="fail")
+     * @Method({"GET"})
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function failAction()
+    {
+        return $this->render('AppBundle:Default:fail.html.twig');
     }
 
     /**

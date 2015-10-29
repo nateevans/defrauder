@@ -2,11 +2,41 @@
 
 namespace Defrauder\Bundle\AppBundle\Helper;
 
+use Defrauder\Bundle\AppBundle\Entity\Transaction;
 use Defrauder\Validator;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class DefrauderHelper
+class DefrauderHelper extends ContainerAware
 {
     protected $valid_amount_multiplier = 10;
+
+    function __construct(ContainerInterface $container)
+    {
+        $this->setContainer($container);
+    }
+
+    /**
+     * Check if the transaction is valid against the Defrauder Validator
+     *
+     * @param Transaction $transaction
+     * @return bool Whether or not the transaction is valid
+     */
+    public function transactionIsValid(Transaction $transaction)
+    {
+        /** @var $em \Doctrine\Common\Persistence\ObjectManager */
+        $em = $this->container->get('doctrine')->getManager();
+
+        $transactionRepo = $em->getRepository('AppBundle:Transaction');
+
+        $average = $transactionRepo->getAvgAmount();
+        $amountIsValid = $this->amountIsValid($average, $transaction->getAmount());
+
+        $zipcodes = $transactionRepo->getAllZips();
+        $locationIsValid = $this->locationIsValid($zipcodes, $transaction->getZip());
+
+        return $amountIsValid && $locationIsValid;
+    }
 
     /**
      * Check whether the given amount is greater than
