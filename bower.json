@@ -1,0 +1,9 @@
+{
+  "name": "nateevans/defrauder",
+  "description": "The fraud checker",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "bootstrap#3.*",
+    "fontawesome": "4.*"
+  }
+}

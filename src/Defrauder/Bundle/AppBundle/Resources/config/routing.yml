@@ -1,0 +1,3 @@
+_app_routes:
+    resource: "@AppBundle/Controller"
+    type: annotation

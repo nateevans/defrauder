@@ -1,0 +1,6 @@
+services:
+    app.form.type.transaction:
+        class: Defrauder\Bundle\AppBundle\Form\Type\TransactionType
+        arguments: [@service_container]
+        tags:
+            - { name: form.type, alias: defrauder_transaction }

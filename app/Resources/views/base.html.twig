@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}The Defrauder{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bower/vendor/bootstrap/dist/css/bootstrap.css') }}" />
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bower/vendor/fontawesome/css/font-awesome.min.css') }}">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block headJavascripts %}{% endblock %}
+    </head>
+    <body style="margin-top: 40px">
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+        <script type="text/javascript">
+            /** IE "console.log()" fix */
+            if(typeof console == "undefined") {
+                window.console = {
+                    log:function() {}
+                }
+            }
+        </script>
+    </body>
+</html>

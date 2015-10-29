@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig', 'EWZRecaptchaBundle:Form:ewz_recaptcha_widget.html.twig'] %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width: 700px; min-width: 365px">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bank"></i> Defrauder Validation Form</h3>
+            </div>
+            <div class="panel-body">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
